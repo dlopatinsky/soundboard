@@ -1,1 +1,3 @@
 torch
+omegaconf
+pyopenal
