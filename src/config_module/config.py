@@ -4,25 +4,32 @@ from configparser import ConfigParser
 
 class Config:
     def __init__(self, path: Path):
-        self._config = ConfigParser()
+        self._tts_config = ConfigParser()
+        self._soundboard_config = ConfigParser()
+        self.load(path)
 
     def load(self, path: Path):
-        self._config.read(path)
+        print(Path(str(path) + 'tts.ini'))
+        self._tts_config.read(Path(str(path) + '/tts.ini'))
+        self._soundboard_config.read(Path(str(path) + '/soundboard.ini'))
 
     def get_from_soundboard_config(self, section: str, option: str):
         try:
-            return self._config[section][option]
+            return self._soundboard_config[section][option]
         except:
             return self._get_default_soundboard_config()[section][option]
 
     def get_tts_profiles(self):
-        profiles = list(dict(self._config).keys())
-        profiles.remove("TTS Settings")
+        profiles = list(dict(self._tts_config).keys())
+        excluded_sections = ['TTS Settings', 'DEFAULT']
+        for section in excluded_sections:
+            if section in profiles:
+                profiles.remove(section)
         return profiles
 
     def get_from_tts_config(self, section: str, option: str):
         try:
-            return self._config[section][option]
+            return self._tts_config[section][option]
         except:
             return self._get_default_tts_config()[section][option]
 
