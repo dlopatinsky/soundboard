@@ -43,6 +43,10 @@ class Config:
     def _get_default_tts_config():
         tts_config = ConfigParser()
 
+        tts_config["TTS Settings"] = {
+            "device_name": "cpu"
+        }
+
         tts_config["Russian"] = {
             "repository": "snakers4/silero-models",
             "model": "silero_tts",
