@@ -7,10 +7,9 @@ A soundboard with text-to-speech additions.
 ---
 
 ## Implementation progress:
-- [ ] basic soundboard functionality
+- [x] basic soundboard functionality
 - [ ] GUI
-- [ ] keybinds
-- [ ] STT -> TTS
+- [ ] keybindings
 
 ---
 
