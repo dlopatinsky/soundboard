@@ -15,8 +15,10 @@ class Config:
         except:
             return self._get_default_soundboard_config()[section][option]
 
-    def get_tts_sections(self):
-        return dict(self._config).keys()
+    def get_tts_profiles(self):
+        profiles = list(dict(self._config).keys())
+        profiles.remove("TTS Settings")
+        return profiles
 
     def get_from_tts_config(self, section: str, option: str):
         try:
