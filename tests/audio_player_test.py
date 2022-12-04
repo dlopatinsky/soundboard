@@ -29,4 +29,5 @@ def test_audio_player_get_audio_list(paths):
     for path in paths:
         audio_player.play_sound(Path(path))
         expected_list.append(Path(path))
-    assert expected_list
+    result = audio_player.get_audio_list()
+    assert result == expected_list
