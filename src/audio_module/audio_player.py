@@ -28,5 +28,5 @@ class AudioPlayer:
                 thread.destroy()
                 self._audio_threads.remove(thread)
 
-    def exit(self):
+    def __del__(self):
         oalQuit()
