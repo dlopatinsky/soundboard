@@ -12,10 +12,16 @@ class Soundboard:
         self._tts = TTS(self._config)
 
     def play_sound(self, file_path: Path):
-        self._audio_player.play_sound(file_path)
+        try:
+            self._audio_player.play_sound(file_path)
+        except:
+            raise Exception('Error playing the file.')
 
     def stop_all_sounds(self):
         self._audio_player.stop_all_sounds()
 
     def run_tts(self, text: str, profile: str, path: Path):
-        self._tts.run(text, profile, path)
+        try:
+            self._tts.run(text, profile, path)
+        except:
+            raise Exception('Error processing TTS')
