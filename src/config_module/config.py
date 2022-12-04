@@ -1,3 +1,4 @@
+import os.path
 from pathlib import Path
 from configparser import ConfigParser
 
@@ -9,9 +10,14 @@ class Config:
         self.load(path)
 
     def load(self, path: Path):
-        print(Path(str(path) + 'tts.ini'))
-        self._tts_config.read(Path(str(path) + '/tts.ini'))
-        self._soundboard_config.read(Path(str(path) + '/soundboard.ini'))
+        tts_config_path = Path(str(path) + '/tts.ini')
+        if not os.path.exists(tts_config_path):
+            self.generate_default_tts_config(tts_config_path)
+        self._tts_config.read(tts_config_path)
+        soundboard_config_path = Path(str(path) + '/soundboard.ini')
+        if not os.path.exists(soundboard_config_path):
+            self.generate_default_soundboard_config(soundboard_config_path)
+        self._soundboard_config.read(soundboard_config_path)
 
     def get_from_soundboard_config(self, section: str, option: str):
         try:
@@ -38,14 +44,14 @@ class Config:
         soundboard_config = ConfigParser()
 
         soundboard_config['Soundboard'] = {
-            'sound_folder': '../../sounds'
+            'sound_folder': '../sounds'
         }
         return soundboard_config
 
     @staticmethod
-    def generate_default_soundboard_config():
+    def generate_default_soundboard_config(path: Path):
         soundboard_config = Config._get_default_soundboard_config()
-        with open('../../config/soundboard.ini', 'w') as f:
+        with open(path, 'w') as f:
             soundboard_config.write(f)
 
     @staticmethod
@@ -76,7 +82,7 @@ class Config:
         return tts_config
 
     @staticmethod
-    def generate_default_tts_config():
+    def generate_default_tts_config(path: Path):
         tts_config = Config._get_default_tts_config()
-        with open('../../config/tts.ini', 'w') as f:
+        with open(path, 'w') as f:
             tts_config.write(f)
