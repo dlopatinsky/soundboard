@@ -14,6 +14,7 @@ class Main:
         application_gui = ApplicationGui(self._soundboard, self._config)
         application_gui.run()
 
+
 if __name__ == "__main__":
     config_dir = Path('../config')
     main = Main(config_dir)
