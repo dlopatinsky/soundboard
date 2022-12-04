@@ -22,7 +22,7 @@ class AudioPlayer:
 
     def stop_all_sounds(self):
         for thread in self._audio_threads:
-            thread.stop()
+            thread[1].stop()
         self._clean_threads()
 
     def _clean_threads(self):
