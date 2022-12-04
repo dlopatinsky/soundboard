@@ -22,7 +22,7 @@ class Config:
     def get_from_soundboard_config(self, section: str, option: str):
         try:
             return self._soundboard_config[section][option]
-        except:
+        except (Exception):
             return self._get_default_soundboard_config()[section][option]
 
     def get_tts_profiles(self):
@@ -36,7 +36,7 @@ class Config:
     def get_from_tts_config(self, section: str, option: str):
         try:
             return self._tts_config[section][option]
-        except:
+        except (Exception):
             return self._get_default_tts_config()[section][option]
 
     @staticmethod

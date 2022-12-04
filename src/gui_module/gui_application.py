@@ -71,7 +71,7 @@ class ApplicationGui(App):
         try:
             self._soundboard.run_tts(text, self._profile_spinner.text, path)
             self.update_sound_list()
-        except:
+        except (Exception):
             message = '''
             Error processing TTS!
             Please, make sure that a valid TTS profile is selected
@@ -83,7 +83,7 @@ class ApplicationGui(App):
         path = Path(self._config.get_from_soundboard_config("Soundboard", "sound_folder") + '/' + button.text)
         try:
             self._soundboard.play_sound(path)
-        except:
+        except (Exception):
             message = '''
             Error playing the file!
             Please, make sure it\'s a .wav audio file.
