@@ -6,26 +6,29 @@ from typing import List
 
 class AudioPlayer:
     def __init__(self):
-        self._audio_threads: List[OALSource] = list()
+        self._audio_threads: List[Path, OALSource] = list()
 
-    def get_audio_count(self) -> int:
+    def get_audio_list(self):
         self._clean_threads()
-        return len(self._audio_threads)
+        result = []
+        for thread in self._audio_threads.copy():
+            result.append(thread[0])
+        return result
 
     def play_sound(self, file_path: Path):
-        openal_thread = oalOpen(str(file_path))
-        self._audio_threads.append(openal_thread)
-        openal_thread.play()
+        thread = (file_path, oalOpen(str(file_path)))
+        self._audio_threads.append(thread)
+        thread[1].play()
 
     def stop_all_sounds(self):
-        for openal_thread in self._audio_threads:
-            openal_thread.stop()
+        for thread in self._audio_threads:
+            thread.stop()
         self._clean_threads()
 
     def _clean_threads(self):
         for thread in self._audio_threads.copy():
-            if thread.get_state() == AL_STOPPED:
-                thread.destroy()
+            if thread[1].get_state() == AL_STOPPED:
+                thread[1].destroy()
                 self._audio_threads.remove(thread)
 
     def __del__(self):
