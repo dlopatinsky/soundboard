@@ -6,7 +6,7 @@ from typing import List
 
 class AudioPlayer:
     def __init__(self):
-        self._audio_threads: List[Path, OALSource] = list()
+        self._audio_threads: List[(Path, OALSource)] = list()
 
     def get_audio_list(self):
         self._clean_threads()
