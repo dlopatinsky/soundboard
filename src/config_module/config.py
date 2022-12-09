@@ -10,6 +10,8 @@ class Config:
         self.load(path)
 
     def load(self, path: Path):
+        if not os.path.exists(path):
+            os.makedirs(path, exist_ok=True)
         tts_config_path = Path(str(path) + '/tts.ini')
         if not os.path.exists(tts_config_path):
             self.generate_default_tts_config(tts_config_path)
