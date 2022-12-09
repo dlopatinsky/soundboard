@@ -4,10 +4,12 @@ from src.config_module.config import Config
 from src.gui_module.gui_application import ApplicationGui
 from src.soundboard_module.soundboard import Soundboard
 
+working_dir = Path(__file__).absolute().parent
+
 
 class Main:
-    def __init__(self, config_dir: Path):
-        self._config = Config(config_dir)
+    def __init__(self, path: Path):
+        self._config = Config(path)
         self._soundboard = Soundboard(self._config)
 
     def run(self):
@@ -16,6 +18,6 @@ class Main:
 
 
 if __name__ == "__main__":
-    config_dir = Path('../config')
+    config_dir = Path(f'{working_dir}/../config')
     main = Main(config_dir)
     main.run()
