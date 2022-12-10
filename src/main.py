@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from src.config_module.config import Config
-from src.gui_module.gui_application import ApplicationGui
-from src.soundboard_module.soundboard import Soundboard
+from config_module.config import Config
+from gui_module.gui_application import ApplicationGui
+from soundboard_module.soundboard import Soundboard
 
 working_dir = Path(__file__).absolute().parent
 

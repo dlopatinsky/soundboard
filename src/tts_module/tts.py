@@ -2,7 +2,7 @@ import os.path
 from pathlib import Path
 import torch
 
-from src.config_module.config import Config
+from config_module.config import Config
 
 
 class TTS:

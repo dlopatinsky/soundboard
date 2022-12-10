@@ -7,16 +7,17 @@ class Config:
     def __init__(self, path: Path):
         self._tts_config = ConfigParser()
         self._soundboard_config = ConfigParser()
+        self.path = path
         self.load(path)
 
     def load(self, path: Path):
         if not os.path.exists(path):
             os.makedirs(path, exist_ok=True)
-        tts_config_path = Path(str(path) + '/tts.ini')
+        tts_config_path = Path(f'{str(path)}/tts.ini')
         if not os.path.exists(tts_config_path):
             self.generate_default_tts_config(tts_config_path)
         self._tts_config.read(tts_config_path)
-        soundboard_config_path = Path(str(path) + '/soundboard.ini')
+        soundboard_config_path = Path(f'{str(path)}/soundboard.ini')
         if not os.path.exists(soundboard_config_path):
             self.generate_default_soundboard_config(soundboard_config_path)
         self._soundboard_config.read(soundboard_config_path)
@@ -41,23 +42,20 @@ class Config:
         except (Exception):
             return self._get_default_tts_config()[section][option]
 
-    @staticmethod
-    def _get_default_soundboard_config():
+    def _get_default_soundboard_config(self):
         soundboard_config = ConfigParser()
 
         soundboard_config['Soundboard'] = {
-            'sound_folder': '../sounds'
+            'sound_directory': f'{self.path.parent.parent.parent}/sounds'
         }
         return soundboard_config
 
-    @staticmethod
-    def generate_default_soundboard_config(path: Path):
-        soundboard_config = Config._get_default_soundboard_config()
+    def generate_default_soundboard_config(self, path: Path):
+        soundboard_config = Config._get_default_soundboard_config(self)
         with open(path, 'w') as f:
             soundboard_config.write(f)
 
-    @staticmethod
-    def _get_default_tts_config():
+    def _get_default_tts_config(self):
         tts_config = ConfigParser()
 
         tts_config['TTS Settings'] = {
@@ -83,8 +81,7 @@ class Config:
         }
         return tts_config
 
-    @staticmethod
-    def generate_default_tts_config(path: Path):
-        tts_config = Config._get_default_tts_config()
+    def generate_default_tts_config(self, path: Path):
+        tts_config = Config._get_default_tts_config(self)
         with open(path, 'w') as f:
             tts_config.write(f)

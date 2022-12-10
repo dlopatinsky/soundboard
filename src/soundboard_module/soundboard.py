@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from src.audio_module.audio_player import AudioPlayer
-from src.config_module.config import Config
-from src.tts_module.tts import TTS
+from audio_module.audio_player import AudioPlayer
+from config_module.config import Config
+from tts_module.tts import TTS
 
 
 class Soundboard:

@@ -9,8 +9,9 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.spinner import Spinner
 from kivy.uix.textinput import TextInput
 
-from src.config_module.config import Config
-from src.soundboard_module.soundboard import Soundboard
+from config_module.config import Config
+from soundboard_module.soundboard import Soundboard
+
 
 
 class ApplicationGui(App):
@@ -18,7 +19,7 @@ class ApplicationGui(App):
         super().__init__(**kwargs)
         self._soundboard = soundboard
         self._config = config
-        self._sound_folder = Path(self._config.get_from_soundboard_config('Soundboard', 'sound_folder'))
+        self._sound_directory = Path(self._config.get_from_soundboard_config('Soundboard', 'sound_directory'))
 
         # Sound list
         self._audio_file_list = GridLayout(padding=0, cols=1, size_hint_y=None)
@@ -58,7 +59,7 @@ class ApplicationGui(App):
         return root
 
     def update_sound_list(self, button: Button = 0):
-        files = os.listdir(self._sound_folder)
+        files = os.listdir(self._sound_directory)
         self._audio_file_list.clear_widgets()
         for file in files:
             button = Button(text=file, size_hint_y=None)
@@ -67,7 +68,7 @@ class ApplicationGui(App):
 
     def _run_tts(self, button: Button):
         text = self._tts_text.text
-        path = Path(self._config.get_from_soundboard_config("Soundboard", "sound_folder") + '/' + text + '.wav')
+        path = Path(f'{self._sound_directory}/{text}.wav')
         try:
             self._soundboard.run_tts(text, self._profile_spinner.text, path)
             self.update_sound_list()
@@ -80,7 +81,7 @@ class ApplicationGui(App):
             self._notify_error(message)
 
     def _play_sound(self, button: Button):
-        path = Path(self._config.get_from_soundboard_config("Soundboard", "sound_folder") + '/' + button.text)
+        path = Path(f'{self._sound_directory}/{button.text}')
         try:
             self._soundboard.play_sound(path)
         except (Exception):

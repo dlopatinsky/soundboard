@@ -18,10 +18,10 @@ def test_config_get_from_tts_config_normal(section, option, expected_value):
 
 
 @pytest.mark.parametrize('section, option, expected_value', [('Soundboard non-default', 'sounds', 'sounds'),
-                                                             ('Soundboard', 'sound_folder', '../sounds')])
+                                                             ('Soundboard', 'sound_directory', f'{working_dir.parent.parent}/sounds')])
 def test_config_get_from_soundboard_config_normal(section, option, expected_value):
     config = Config(Path(f'{working_dir}/test-config'))
-    assert config.get_from_soundboard_config(section, option) == expected_value
+    assert Path(config.get_from_soundboard_config(section, option)) == Path(expected_value)
 
 
 def clean_default_config():
@@ -33,10 +33,10 @@ def clean_default_config():
         os.remove(soundboard_config_path)
 
 
-@pytest.mark.parametrize('section, option, expected_value', [('Soundboard', 'sound_folder', '../sounds')])
+@pytest.mark.parametrize('section, option, expected_value', [('Soundboard', 'sound_directory', f'{working_dir.parent.parent}/sounds')])
 def test_config_get_from_soundboard_config_auto_generated(section, option, expected_value):
     config = Config(Path(f'{working_dir}/config'))
-    assert config.get_from_soundboard_config(section, option) == expected_value
+    assert Path(config.get_from_soundboard_config(section, option)) == Path(expected_value)
     clean_default_config()
 
 
